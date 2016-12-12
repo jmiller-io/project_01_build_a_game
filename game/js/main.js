@@ -1,7 +1,13 @@
 console.log('Linked!');
 
+// Checker identities
+var whiteChecker = 1;
+var blackChecker = 2;
 
 // Create Game Board
+
+var gboardArr = [];
+
 var createGameBoard = function() {
   $table = document.createElement('table');
   $table.setAttribute('id', 'table');
@@ -31,18 +37,61 @@ var createGameBoard = function() {
   for (var i = 0; i < $allTableRows.length; i++) {
     console.log('Table Row: ' + $allTableRows[i]);
     for (var j = 0; j < $allTableRows[i].children.length; j++){
-        console.log('hi')
-        if ( i % 2 === 0 && j % 2 === 0 ){
-          $allTableRows[i].children[j].classList.add('evenTableCell');
-        }
-        else if ( i % 2 === 0 && j % 2 === 1 ){
-          $allTableRows[i].children[j].classList.add('oddTableCell');
-        };
-        if (i % 2 === 1 && j % 2 === 0) {
-          $allTableRows[i].children[j].classList.add('oddTableCell');
-        } else {$allTableRows[i].children[j].classList.add('evenTableCell');}
+          if (i % 2 === 0) {
+            if (j % 2 === 0){
+              $allTableRows[i].children[j].classList.add('white');
+            } else {
+              $allTableRows[i].children[j].classList.add('black');
+              }
+          };
+
+          if (i % 2 === 1) {
+            if (j % 2 === 0){
+              $allTableRows[i].children[j].classList.add('black');
+            } else {
+              $allTableRows[i].children[j].classList.add('white');
+              }
+          };
+
+        // console.log('hi')
+        // if ( i % 2 === 0 && j % 2 === 0 ){
+        //   console.log('Even row. even cell');
+        //   $allTableRows[i].children[j].classList.add('evenTableCell');
+        //   $allTableRows[i].children[j].classList.add('white');
+        // };
+        // if ( i % 2 === 0 && j % 2 === 1 ){
+        //   console.log ($allTableRows[i] +  " row even cell odd");
+        //   $allTableRows[i].children[j].classList.add('oddTableCell');
+        //   $allTableRows[i].children[j].classList.add('black');
+        // };
+        // if (i % 2 === 1 && j % 2 === 0) {
+        //   console.log ($allTableRows[i] + " row odd cell even")
+        //   $allTableRows[i].children[j].classList.add('oddTableCell');
+        //   $allTableRows[i].children[j].classList.add('black');
+        // };
+        //  if ( i % 2 === 1 && j % 2 === 1 ) {
+        //    console.log ('odd row odd cell');
+        //    $allTableRows[i].children[j].classList.add('oddTableCell');
+        //    $allTableRows[i].children[j].classList.add('white');
+        //  }
     };
   };
+
+  // Create the checkers
+
+
 };
+
+// Add the checkers to the board
+
+firstTwoRows =
+
+
+
+
+
+
+
+
 
 createGameBoard();

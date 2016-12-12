@@ -15,10 +15,13 @@ body {
   height: 50px;
 }
 
-.evenTableCell {
-  background-color: #D2B48C;
+.white {
+  /*background-color: #D2B48C;*/
+  background-color: white;
 }
 
-.oddTableCell {
-  background-color: #FFF8DC;
+.black {
+  /*background-color: #FFF8DC;*/
+  background-color: black;
+
 }
