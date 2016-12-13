@@ -6,8 +6,6 @@ var blackChecker = 2;
 
 // Create Game Board
 
-var gboardArr = [];
-
 var createGameBoard = function() {
   $table = document.createElement('table');
   $table.setAttribute('id', 'table');
@@ -52,46 +50,58 @@ var createGameBoard = function() {
               $allTableRows[i].children[j].classList.add('white');
               }
           };
-
-        // console.log('hi')
-        // if ( i % 2 === 0 && j % 2 === 0 ){
-        //   console.log('Even row. even cell');
-        //   $allTableRows[i].children[j].classList.add('evenTableCell');
-        //   $allTableRows[i].children[j].classList.add('white');
-        // };
-        // if ( i % 2 === 0 && j % 2 === 1 ){
-        //   console.log ($allTableRows[i] +  " row even cell odd");
-        //   $allTableRows[i].children[j].classList.add('oddTableCell');
-        //   $allTableRows[i].children[j].classList.add('black');
-        // };
-        // if (i % 2 === 1 && j % 2 === 0) {
-        //   console.log ($allTableRows[i] + " row odd cell even")
-        //   $allTableRows[i].children[j].classList.add('oddTableCell');
-        //   $allTableRows[i].children[j].classList.add('black');
-        // };
-        //  if ( i % 2 === 1 && j % 2 === 1 ) {
-        //    console.log ('odd row odd cell');
-        //    $allTableRows[i].children[j].classList.add('oddTableCell');
-        //    $allTableRows[i].children[j].classList.add('white');
-        //  }
     };
   };
 
-  // Create the checkers
 
 
 };
 
-// Add the checkers to the board
+// // Create red checker pieces
+// var createCheckerPieces = function() {
+//   // Red first
+//   for (var i = 0; i < 12 ; i++){
+//     $newCheckerPiece = document.createElement('div');
+//     $newCheckerPiece.classList.add('redChecker');
+//   };
+// }
 
-firstTwoRows =
+//Get the red checkers
+// $redCheckers = document.querySelectorAll('.redChecker');
+
+//
+
+$allTableRows = document.querySelectorAll('tr');
+
+var createCheckerPieces = function () {
+  // Red Pieces
+  for ( var i = 0 ; i < 3 ; i++){
+    $allTableRowCells = $allTableRows[i].children;
+    for (var j = 0; j < $allTableRowCells.length; j++){
+
+      if ($allTableRowCells[j].classList.contains('black')) {
+        $div = document.createElement('div');
+        $div.classList.add('redChecker');
+        $allTableRowCells[j].appendChild($div);
+      } else { console.log('its a white tile')}
+    };
+  };
+
+  // White Pieces
+for ( var i = 5 ; i < 8 ; i++){
+    $allTableRowCells = $allTableRows[i].children;
+    for (var j = 0; j < $allTableRowCells.length; j++){
+
+      if ($allTableRowCells[j].classList.contains('black')) {
+        $div = document.createElement('div');
+        $div.classList.add('greenChecker');
+        $allTableRowCells[j].appendChild($div);
+      } else { console.log('its a white tile')}
+    };
+  };
 
 
-
-
-
-
-
+}
 
 
 createGameBoard();
