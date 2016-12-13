@@ -4,6 +4,16 @@ console.log('Linked!');
 var whiteChecker = 1;
 var blackChecker = 2;
 
+// board
+var board = [[0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0]];
+
 // Create Game Board
 
 var createGameBoard = function() {
