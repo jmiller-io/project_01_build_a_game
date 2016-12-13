@@ -9,14 +9,15 @@ var previousPlayer;
 var selectedChecker;
 
 // board
-var board = [0,1,0,1,0,1,0,1,
-             1,0,1,0,1,0,1,0,
-             0,1,0,1,0,1,0,1,
-             0,0,0,0,0,0,0,0,
-             0,0,0,0,0,0,0,0,
-             2,0,2,0,2,0,2,0,
-             0,2,0,2,0,2,0,2,
-             2,0,2,0,2,0,2,0];
+var board = [[0,1,0,1,0,1,0,1],
+             [1,0,1,0,1,0,1,0],
+             [0,1,0,1,0,1,0,1],
+             [0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0],
+             [2,0,2,0,2,0,2,0],
+             [0,2,0,2,0,2,0,2],
+             [2,0,2,0,2,0,2,0]
+];
 
 // Create Game Board
 
@@ -53,10 +54,14 @@ var createGameBoard = function() {
             if (j % 2 === 0){
               $allTableRows[i].children[j].classList.add('white');
               $div = document.createElement('div');
+              $div.dataset.row=i;
+              $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
             } else {
               $allTableRows[i].children[j].classList.add('black');
               $div = document.createElement('div');
+              $div.dataset.row=i;
+              $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
               }
           };
@@ -65,10 +70,14 @@ var createGameBoard = function() {
             if (j % 2 === 0){
               $allTableRows[i].children[j].classList.add('black');
               $div = document.createElement('div');
+              $div.dataset.row=i;
+              $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
             } else {
               $allTableRows[i].children[j].classList.add('white');
               $div = document.createElement('div');
+              $div.dataset.row=i;
+              $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
               }
           };
@@ -98,21 +107,27 @@ var selectChecker = function (event) {
 // Render Game
 var renderGame = function () {
   //Get all divs to set element Id
-  $allDivs = document.querySelectorAll('div');
-  for (var i = 0; i < $allDivs.length; i++) {
-    $allDivs[i].setAttribute('id', i);
-  };
 
-// Red and Green Checker Placement
+  $allDivs = document.querySelectorAll('div');
   for (var i = 0; i < board.length; i++) {
-   if ( board[i] === 1 ) {
-           console.log('it green')
-           document.getElementById(i).classList.add('redChecker');
-         } else if (board[i] === 2) {
-      document.getElementById(i).classList.add('greenChecker');
-    } else {
-      document.getElementById(i).classList.add('emptyTileCells')
-    }
+    for (var j = 0; j < board[i].length; j++) {
+      console.log('going through rows')
+       var row = i;
+       //'[data-row="' + i + '"]';
+       var col = j;
+       //'[data-col="' + j + '"]';
+       for (var k = 0; k < $allDivs.length; k++) {
+        if ($allDivs[k].dataset.row == i && $allDivs[k].dataset.col == j) {
+            console.log('matches')
+          if (board[i][j] === 1) {
+            $allDivs[k].classList.add('greenChecker');
+          };
+          if (board[i][j] === 2) {
+            $allDivs[k].classList.add('redChecker');
+          }
+        };
+       };
+    };
   };
 };
 
