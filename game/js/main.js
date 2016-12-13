@@ -6,6 +6,7 @@ var redChecker = 2;
 
 var currentPlayer = greenChecker;
 var previousPlayer;
+var selectedChecker;
 
 // board
 var board = [0,1,0,1,0,1,0,1,
@@ -78,6 +79,7 @@ renderGame();
 
 // Add Event Listener to board
 $table.addEventListener('click', selectChecker);
+$table.addEventListener('dblclick', moveChecker);
 
 };
 
@@ -87,47 +89,13 @@ $table.addEventListener('click', selectChecker);
 var selectChecker = function (event) {
   console.log('clicked');
   console.log(event.target);
-  var selectedChecker  = document.getElementById(event.target.id);
+  selectedChecker  = document.getElementById(event.target.id);
   selectedChecker.classList.add('selected');
   console.log(event.currentTarget);
 
 };
 
-// Adds checker pieces to game board using DOM
- var createCheckerPieces = function () {
-   // Red Pieces
-   for ( var i = 0 ; i < 3 ; i++){
-     $allTableRowCells = $allTableRows[i].children;
-     for (var j = 0; j < $allTableRowCells.length; j++){
-
-       if ($allTableRowCells[j].classList.contains('black')) {
-           $allTableRowCells[j].classList.add('redChecker')
-       } else {
-         console.log('its a white tile')
-       };
-     };
-   };
-
-   // green Pieces
-   for ( var i = 5 ; i < 8 ; i++){
-       $allTableRowCells = $allTableRows[i].children;
-       for (var j = 0; j < $allTableRowCells.length; j++){
-
-         if ($allTableRowCells[j].classList.contains('black')) {
-          $allTableRowCells[j].classList.add('greenChecker');
-         } else {
-           console.log('its a white tile')
-         };
-       };
-     };
- };
-
-
-24-38
-
-
-
- // Render Game
+// Render Game
 var renderGame = function () {
   //Get all divs to set element Id
   $allDivs = document.querySelectorAll('div');
@@ -149,8 +117,61 @@ var renderGame = function () {
 };
 
 
-var addClasstoEmptyBlackTiles = function () {
 
+// move piece function
+var moveChecker = function(event) {
+  if (currentPlayer === greenChecker) {
+    if (board[event.target.id] === 0) {
+      console.log('doubl click it');
+      console.log(event.target);
+      board[event.target.id] = 1;
+      $moveCheckerTo = event.target;
+
+      $moveCheckerTo.classList.add('greenChecker');
+      //$moveCheckerTo.classList.remove('emptyTileCells');
+      //selectedChecker.classList.remove('greenChecker');
+      renderGame();
+
+    }
+  }
 }
 
+
+
+
+
+
 createGameBoard();
+
+
+
+
+
+// // Adds checker pieces to game board using DOM
+//  var createCheckerPieces = function () {
+//    // Red Pieces
+//    for ( var i = 0 ; i < 3 ; i++){
+//      $allTableRowCells = $allTableRows[i].children;
+//      for (var j = 0; j < $allTableRowCells.length; j++){
+
+//        if ($allTableRowCells[j].classList.contains('black')) {
+//            $allTableRowCells[j].classList.add('redChecker')
+//        } else {
+//          console.log('its a white tile')
+//        };
+//      };
+//    };
+
+//    // green Pieces
+//    for ( var i = 5 ; i < 8 ; i++){
+//        $allTableRowCells = $allTableRows[i].children;
+//        for (var j = 0; j < $allTableRowCells.length; j++){
+
+//          if ($allTableRowCells[j].classList.contains('black')) {
+//           $allTableRowCells[j].classList.add('greenChecker');
+//          } else {
+//            console.log('its a white tile')
+//          };
+//        };
+//      };
+//  };
