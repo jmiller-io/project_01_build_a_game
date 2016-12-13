@@ -1,22 +1,32 @@
 console.log('Linked!');
 
 // Checker identities
-var greenChecker = 1;
-var redChecker = 2;
+//var greenChecker = 1;
+var greenChecker = {
+  name: 'green',
+  isSelected: true,
+  isCrowned: false
+};
+//var redChecker = 2;
+var redChecker = {
+  name: 'red',
+  isSelected: true,
+  isCrowned: false
+};
 
 var currentPlayer = greenChecker;
 var previousPlayer;
 var selectedChecker;
 
 // board
-var board = [[0,1,0,1,0,1,0,1],
-             [1,0,1,0,1,0,1,0],
-             [0,1,0,1,0,1,0,1],
-             [0,0,0,0,0,0,0,0],
-             [0,0,0,0,0,0,0,0],
-             [2,0,2,0,2,0,2,0],
-             [0,2,0,2,0,2,0,2],
-             [2,0,2,0,2,0,2,0]
+var board = [[null,'green',null,'green',null,'green',null,'green'],
+             ['green',null,'green',null,'green',null,'green',null],
+             [null,'green',null,'green',null,'green',null,'green'],
+             [null,null,null,null,null,null,null,null],
+             [null,null,null,null,null,null,null,null],
+             ['red',null,'red',null,'red',null,'red',null],
+             [null,'red',null,'red',null,'red',null,'red'],
+             ['red',null,'red',null,'red',null,'red',null]
 ];
 
 // Create Game Board
@@ -88,7 +98,7 @@ renderGame();
 
 // Add Event Listener to board
 $table.addEventListener('click', selectChecker);
-$table.addEventListener('dblclick', moveChecker);
+//$table.addEventListener('dblclick', moveChecker);
 
 };
 
@@ -98,9 +108,12 @@ $table.addEventListener('dblclick', moveChecker);
 var selectChecker = function (event) {
   console.log('clicked');
   console.log(event.target);
-  selectedChecker  = document.getElementById(event.target.id);
-  selectedChecker.classList.add('selected');
-  console.log(event.currentTarget);
+  if (event.target.classList.contains())
+  event.target.classList.add('selected');
+  //selectedChecker  = document.getElementById(event.target);
+  //console.log(selectedChecker);
+  //selectedChecker.classList.add('selected');
+  //console.log(event.currentTarget);
 
 };
 
@@ -119,10 +132,10 @@ var renderGame = function () {
        for (var k = 0; k < $allDivs.length; k++) {
         if ($allDivs[k].dataset.row == i && $allDivs[k].dataset.col == j) {
             console.log('matches')
-          if (board[i][j] === 1) {
+          if (board[i][j] === 'green') {
             $allDivs[k].classList.add('greenChecker');
           };
-          if (board[i][j] === 2) {
+          if (board[i][j] === 'red') {
             $allDivs[k].classList.add('redChecker');
           }
         };
@@ -131,62 +144,12 @@ var renderGame = function () {
   };
 };
 
+// Move function
+var moveChecker = function () {
 
-
-// move piece function
-var moveChecker = function(event) {
-  if (currentPlayer === greenChecker) {
-    if (board[event.target.id] === 0) {
-      console.log('doubl click it');
-      console.log(event.target);
-      board[event.target.id] = 1;
-      $moveCheckerTo = event.target;
-
-      $moveCheckerTo.classList.add('greenChecker');
-      //$moveCheckerTo.classList.remove('emptyTileCells');
-      //selectedChecker.classList.remove('greenChecker');
-      renderGame();
-
-    }
-  }
 }
 
 
 
 
-
-
 createGameBoard();
-
-
-
-
-
-// // Adds checker pieces to game board using DOM
-//  var createCheckerPieces = function () {
-//    // Red Pieces
-//    for ( var i = 0 ; i < 3 ; i++){
-//      $allTableRowCells = $allTableRows[i].children;
-//      for (var j = 0; j < $allTableRowCells.length; j++){
-
-//        if ($allTableRowCells[j].classList.contains('black')) {
-//            $allTableRowCells[j].classList.add('redChecker')
-//        } else {
-//          console.log('its a white tile')
-//        };
-//      };
-//    };
-
-//    // green Pieces
-//    for ( var i = 5 ; i < 8 ; i++){
-//        $allTableRowCells = $allTableRows[i].children;
-//        for (var j = 0; j < $allTableRowCells.length; j++){
-
-//          if ($allTableRowCells[j].classList.contains('black')) {
-//           $allTableRowCells[j].classList.add('greenChecker');
-//          } else {
-//            console.log('its a white tile')
-//          };
-//        };
-//      };
-//  };
