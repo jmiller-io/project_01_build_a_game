@@ -2,51 +2,20 @@ body {
   background-color: grey;
 }
 
-#table {
+.openSpace {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
   border: 1px solid black;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 10%;
-}
-
-.tableCell {
-  border: 1px solid red;
-  width: 50px;
-  height: 50px;
-}
-
-.white {
-  /*background-color: #D2B48C;*/
+  vertical-align: middle;
+  text-align: center;
+  line-height: 100px;
   background-color: white;
-}
-
-.black {
-  /*background-color: #FFF8DC;*/
-  background-color: black;
-
-}
-
-.greenChecker {
-  background-color: green;
-  width: 50px;
-  height: 50px;
   border-radius: 50%;
+  margin: 3px;
 }
 
-.redChecker {
-  border-radius: 50%;
-  background-color: red;
-  width: 50px;
-  height: 50px;
-}
 
-.selected {
-  border: 2px solid yellow;
-}
-
-.emptyTileCells {
-  border-radius: 50%;
-  background-color: rgba(0,0,0,0);
-  width: 50px;
-  height: 50px;
+.divBoard {
+  border: 2px solid black;
 }
