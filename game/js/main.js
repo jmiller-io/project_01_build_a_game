@@ -83,25 +83,27 @@ var createCheckerPieces = function () {
         $div = document.createElement('div');
         $div.classList.add('redChecker');
         $allTableRowCells[j].appendChild($div);
-      } else { console.log('its a white tile')}
+      } else {
+        console.log('its a white tile')
+      };
     };
   };
 
   // White Pieces
-for ( var i = 5 ; i < 8 ; i++){
-    $allTableRowCells = $allTableRows[i].children;
-    for (var j = 0; j < $allTableRowCells.length; j++){
+  for ( var i = 5 ; i < 8 ; i++){
+      $allTableRowCells = $allTableRows[i].children;
+      for (var j = 0; j < $allTableRowCells.length; j++){
 
-      if ($allTableRowCells[j].classList.contains('black')) {
-        $div = document.createElement('div');
-        $div.classList.add('greenChecker');
-        $allTableRowCells[j].appendChild($div);
-      } else { console.log('its a white tile')}
+        if ($allTableRowCells[j].classList.contains('black')) {
+          $div = document.createElement('div');
+          $div.classList.add('greenChecker');
+          $allTableRowCells[j].appendChild($div);
+        } else {
+          console.log('its a white tile')
+        };
+      };
     };
-  };
-
-
-}
+};
 
 
 createGameBoard();
