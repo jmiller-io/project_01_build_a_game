@@ -40,9 +40,9 @@ body {
   height: 50px;
 }
 
-.selected {
+/*.selected {
   border: 2px solid yellow;
-}
+}*/
 
 .emptyTileCells {
   border-radius: 50%;

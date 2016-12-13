@@ -154,7 +154,7 @@ var renderGame = function () {
             $allDivs[k].classList.add('redChecker');
           }
           if (board[i][j].isSelected === true) {
-            $allDivs[k].classList.add('selected');
+            $allDivs[k].style.border = "2px solid yellow";
           }
         };
        };
@@ -162,7 +162,51 @@ var renderGame = function () {
   };
 };
 
+var moveThaCheckaPieces = function () {
+//To move pieces
+var emptyCheckerSpace = {
+  name: 'null',
+  isSelected: false,
+  isCrowned: false
+};
 
+
+// get origin and destination pieces
+
+// The Origin
+desiredMovePoints[0]
+originRow = desiredMovePoints[0].dataset.row;
+originCol = desiredMovePoints[0].dataset.col;
+
+// remove the properties we don't want to move over
+board[originRow][originCol].isSelected = false;
+// create object for reference by destination
+originObject = board[originRow][originCol];
+
+// The destination
+desiredMovePoints[1]
+// get the coordinates
+destRow = desiredMovePoints[1].dataset.row;
+destCol = desiredMovePoints[1].dataset.col;
+
+// Set object info to the origin properties
+board[destRow][destCol].name = originObject.name;
+board[destRow][destCol].isSelected = originObject.isSelected;
+board[destRow][destCol].isCrowned = originObject.isCrowned;
+
+// set object properties to empty tile for origin checker
+
+
+// Programmatically this works but I need something in here to remove classes for green checker red checker etc
+// Remove the classes associated with div. since we're not rebuilding the divs.
+// The classes stick
+board[originRow][originCol].name = emptyCheckerSpace.name;
+board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
+board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
+
+
+
+}
 
 
 createGameBoard();
