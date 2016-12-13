@@ -4,7 +4,7 @@ console.log('Linked!');
 //var greenChecker = 1;
 var greenChecker = {
   name: 'green',
-  isSelected: true,
+  isSelected: false,
   isCrowned: false
 };
 //var redChecker = 2;
@@ -14,19 +14,25 @@ var redChecker = {
   isCrowned: false
 };
 
+var emptyCheckerSpace = {
+  name: 'null',
+  isSelected: false,
+  isCrowned: false
+};
+
 var currentPlayer = greenChecker;
 var previousPlayer;
-var selectedChecker;
+var desiredMovePoints = [];
 
 // board
-var board = [[null,'green',null,'green',null,'green',null,'green'],
-             ['green',null,'green',null,'green',null,'green',null],
-             [null,'green',null,'green',null,'green',null,'green'],
-             [null,null,null,null,null,null,null,null],
-             [null,null,null,null,null,null,null,null],
-             ['red',null,'red',null,'red',null,'red',null],
-             [null,'red',null,'red',null,'red',null,'red'],
-             ['red',null,'red',null,'red',null,'red',null]
+var board = [[{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false}],
+             [{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false}],
+             [{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false}],
+             [{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false}],
+             [{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false}],
+             [{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false}],
+             [{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false}],
+             [{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'null', isSelected:false, isCrowned: false}]
 ];
 
 // Create Game Board
@@ -56,7 +62,7 @@ var createGameBoard = function() {
   };
 
 
-  // Color in tiles
+  // Color in tiles and also create the divs for the checker pieces
   for (var i = 0; i < $allTableRows.length; i++) {
     console.log('Table Row: ' + $allTableRows[i]);
     for (var j = 0; j < $allTableRows[i].children.length; j++){
@@ -97,7 +103,7 @@ var createGameBoard = function() {
 renderGame();
 
 // Add Event Listener to board
-$table.addEventListener('click', selectChecker);
+$table.addEventListener('click', moveChecker);
 //$table.addEventListener('dblclick', moveChecker);
 
 };
@@ -105,16 +111,27 @@ $table.addEventListener('click', selectChecker);
 
 
   // event Listener for board
-var selectChecker = function (event) {
+var moveChecker = function (event) {
   console.log('clicked');
   console.log(event.target);
-  if (event.target.classList.contains())
-  event.target.classList.add('selected');
-  //selectedChecker  = document.getElementById(event.target);
-  //console.log(selectedChecker);
-  //selectedChecker.classList.add('selected');
-  //console.log(event.currentTarget);
+  $target = event.target;
+  if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== null) {
+      console.log (" this checker is not selected");
+      console.log('selecting it')
+      board[$target.dataset.row][$target.dataset.col].isSelected = true;
+      if (desiredMovePoints.length <= 2) {
+          desiredMovePoints.push($target);
+      }
+  }
 
+  if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name === null) {
+      console.log ('destination is a free space');
+      desiredMovePoints.push($target);
+      console.log('origin:' + desiredMovePoints[0] + 'destination: ' + desiredMovePoints[2]);
+
+  }
+
+renderGame();
 };
 
 // Render Game
@@ -124,30 +141,26 @@ var renderGame = function () {
   $allDivs = document.querySelectorAll('div');
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
-      console.log('going through rows')
        var row = i;
        //'[data-row="' + i + '"]';
        var col = j;
        //'[data-col="' + j + '"]';
        for (var k = 0; k < $allDivs.length; k++) {
         if ($allDivs[k].dataset.row == i && $allDivs[k].dataset.col == j) {
-            console.log('matches')
-          if (board[i][j] === 'green') {
+          if (board[i][j].name === 'green') {
             $allDivs[k].classList.add('greenChecker');
           };
-          if (board[i][j] === 'red') {
+          if (board[i][j].name === 'red') {
             $allDivs[k].classList.add('redChecker');
+          }
+          if (board[i][j].isSelected === true) {
+            $allDivs[k].classList.add('selected');
           }
         };
        };
     };
   };
 };
-
-// Move function
-var moveChecker = function () {
-
-}
 
 
 
