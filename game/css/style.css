@@ -26,16 +26,16 @@ body {
 
 }
 
-.greenChecker {
+/*.greenChecker {
   background-color: green;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-}
+}*/
 
-.redChecker {
+.checker {
   border-radius: 50%;
-  background-color: red;
+  /*background-color: red;*/
   width: 50px;
   height: 50px;
 }
