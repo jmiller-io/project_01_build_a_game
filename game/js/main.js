@@ -29,7 +29,7 @@ var players = [
   }
 ];
 
-var currentPlayer = players[0].name; // starting player is red
+var currentPlayer = players[1].name; // starting player is green
 document.getElementById('playerUp').textContent = currentPlayer;
 var nextPlayer;
 var desiredMovePoints = [];
