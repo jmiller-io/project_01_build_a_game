@@ -46,7 +46,6 @@ var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'g
 ];
 
 // Create Game Board
-
 var createGameBoard = function() {
   var $table = document.createElement('table');
   $table.setAttribute('id', 'table');
@@ -71,7 +70,52 @@ var createGameBoard = function() {
       };
   };
 
+  colorTiles();
+  renderGame();
 
+  // Add Event Listener to board
+  $table.addEventListener('click', moveChecker);
+  //$table.addEventListener('dblclick', moveChecker);
+};
+
+// event Listener for board
+var moveChecker = function (event) {
+  $target = event.target;
+  if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
+    console.log('dont click me');
+    return false;
+  };
+  if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
+    if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
+      console.log (" this item has not been previously selected");
+      console.log('selecting it');
+      board[$target.dataset.row][$target.dataset.col].isSelected = true;
+      if (desiredMovePoints.length <= 2) {
+          desiredMovePoints.push($target);
+      };
+    };
+
+
+    if (desiredMovePoints.length === 2) {
+        console.log('origin: ' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
+        moveThaCheckaPieces();
+    };
+  } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
+      console.log('selecting the emptySpace');
+      board[$target.dataset.row][$target.dataset.col].isSelected = true;
+      desiredMovePoints.push($target);
+      moveThaCheckaPieces();
+  } else {
+    console.log(currentPlayer + " didnt select their color checker" );
+  };
+
+renderGame();
+};
+
+
+// Color in Tiles
+
+var colorTiles = function () {
   // Color in tiles and also create the divs for the checker pieces
   for (var i = 0; i < $allTableRows.length; i++) {
     console.log('Table Row: ' + $allTableRows[i]);
@@ -105,59 +149,15 @@ var createGameBoard = function() {
               $div.dataset.row=i;
               $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
-              }
+              };
           };
     };
   };
-
-renderGame();
-
-// Add Event Listener to board
-$table.addEventListener('click', moveChecker);
-//$table.addEventListener('dblclick', moveChecker);
-
-};
-
-
-
-  // event Listener for board
-var moveChecker = function (event) {
-  $target = event.target;
-  if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
-    console.log('dont click me')
-    return false;
-  }
-  if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
-    if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
-      console.log (" this item has not been previously selected");
-      console.log('selecting it')
-      board[$target.dataset.row][$target.dataset.col].isSelected = true;
-      if (desiredMovePoints.length <= 2) {
-          desiredMovePoints.push($target);
-      }
-    }
-
-
-    if (desiredMovePoints.length === 2) {
-        console.log('origin: ' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
-        moveThaCheckaPieces();
-    };
-  } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
-      console.log('selecting the emptySpace')
-      board[$target.dataset.row][$target.dataset.col].isSelected = true;
-      desiredMovePoints.push($target);
-      moveThaCheckaPieces();
-  } else {
-    console.log(currentPlayer + " didnt select their color checker" );
-  };
-
-renderGame();
 };
 
 // Render Game
 var renderGame = function () {
   //Get all divs to set element Id
-
   $allDivs = document.querySelectorAll('div');
   for (var i = 0; i < board.length; i++) {
     for (var j = 0; j < board[i].length; j++) {
@@ -192,50 +192,54 @@ var renderGame = function () {
 
 var moveThaCheckaPieces = function () {
 
-  // get the coordinates
+  // The Origin
+  desiredMovePoints[0];
+
+  // coordinates of origin
+  originRow = desiredMovePoints[0].dataset.row;
+  originCol = desiredMovePoints[0].dataset.col;
+
+  // get the coordinates for destination
   destRow = desiredMovePoints[1].dataset.row;
   destCol = desiredMovePoints[1].dataset.col;
 
-  if (board[destRow][destCol].name !== 'emptySpace') {
-    console.log('You cant jump on opponent. you lose your turn');
+  // create object for reference by destination
+  originObject = board[originRow][originCol];
+
+  if (originObject.isCrowned === false && originRow === destRow) {
+    console.log('not permitted piece is not Crowned');
     desiredMovePoints[0].style.border = '';
-    desiredMovePoints = [];
-    return true;
-    } else {
-
-    // The Origin
-    desiredMovePoints[0]
-
-    originRow = desiredMovePoints[0].dataset.row;
-    originCol = desiredMovePoints[0].dataset.col;
-
-    // remove the properties we don't want to move over
-    board[originRow][originCol].isSelected = false;
-    // create object for reference by destination
-    originObject = board[originRow][originCol];
-    // Display Cleanup
-    desiredMovePoints[0].style.border = '';
-    desiredMovePoints[0].style.background = '';
-
-    // The destination
-    //desiredMovePoints[1]
-
-    // Set object info to the origin properties
-    board[destRow][destCol].name = originObject.name;
-    board[destRow][destCol].isSelected = originObject.isSelected;
-    board[destRow][destCol].isCrowned = originObject.isCrowned;
-
-    // Programmatically this works but I need something in here to remove classes for green checker red checker etc
-    // Remove the classes associated with div. since we're not rebuilding the divs.
-    // The classes stick
-    board[originRow][originCol].name = emptyCheckerSpace.name;
-    board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
-    board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
-    // Display CleanUp
     desiredMovePoints[1].style.border = '';
+    board[originRow][originCol].isSelected = false;
+    board[destRow][destCol].isSelected = false;
     desiredMovePoints = [];
-    switchPlayer();
-    }
+    return false;
+  }
+
+  // remove the properties we don't want to move over
+  board[originRow][originCol].isSelected = false;
+  // Display Cleanup
+  desiredMovePoints[0].style.border = '';
+  desiredMovePoints[0].style.background = '';
+
+  // The destination
+  //desiredMovePoints[1]
+
+  // Set object info to the origin properties
+  board[destRow][destCol].name = originObject.name;
+  board[destRow][destCol].isSelected = originObject.isSelected;
+  board[destRow][destCol].isCrowned = originObject.isCrowned;
+
+  // Programmatically this works but I need something in here to remove classes for green checker red checker etc
+  // Remove the classes associated with div. since we're not rebuilding the divs.
+  // The classes stick
+  board[originRow][originCol].name = emptyCheckerSpace.name;
+  board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
+  board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
+  // Display CleanUp
+  desiredMovePoints[1].style.border = '';
+  desiredMovePoints = [];
+  switchPlayer();
 };
 
 // function to determine switch player
@@ -247,10 +251,6 @@ var switchPlayer = function () {
   };
   document.getElementById('playerUp').textContent = currentPlayer;
 };
-
-
-
-
 
 
 createGameBoard();
