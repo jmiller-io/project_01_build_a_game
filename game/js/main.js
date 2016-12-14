@@ -181,49 +181,52 @@ var renderGame = function () {
 };
 
 var moveThaCheckaPieces = function () {
-// get origin and destination pieces
 
-// The Origin
-desiredMovePoints[0]
+  // get the coordinates
+  destRow = desiredMovePoints[1].dataset.row;
+  destCol = desiredMovePoints[1].dataset.col;
 
-originRow = desiredMovePoints[0].dataset.row;
-originCol = desiredMovePoints[0].dataset.col;
+  if (board[destRow][destCol].name !== 'emptySpace') {
+    console.log('You cant jump on opponent. you lost your turn');
+    desiredMovePoints[0].style.border = '';
+    desiredMovePoints = [];
+    return true;
+    } else {
 
-// remove the properties we don't want to move over
-board[originRow][originCol].isSelected = false;
-// create object for reference by destination
-originObject = board[originRow][originCol];
-// Display Cleanup
-desiredMovePoints[0].style.border = '';
-desiredMovePoints[0].style.background = '';
+    // The Origin
+    desiredMovePoints[0]
 
+    originRow = desiredMovePoints[0].dataset.row;
+    originCol = desiredMovePoints[0].dataset.col;
 
-// The destination
-desiredMovePoints[1]
-// get the coordinates
-destRow = desiredMovePoints[1].dataset.row;
-destCol = desiredMovePoints[1].dataset.col;
+    // remove the properties we don't want to move over
+    board[originRow][originCol].isSelected = false;
+    // create object for reference by destination
+    originObject = board[originRow][originCol];
+    // Display Cleanup
+    desiredMovePoints[0].style.border = '';
+    desiredMovePoints[0].style.background = '';
 
-// Set object info to the origin properties
-board[destRow][destCol].name = originObject.name;
-board[destRow][destCol].isSelected = originObject.isSelected;
-board[destRow][destCol].isCrowned = originObject.isCrowned;
+    // The destination
+    //desiredMovePoints[1]
 
-// set object properties to empty tile for origin checker
+    // Set object info to the origin properties
+    board[destRow][destCol].name = originObject.name;
+    board[destRow][destCol].isSelected = originObject.isSelected;
+    board[destRow][destCol].isCrowned = originObject.isCrowned;
 
+    // Programmatically this works but I need something in here to remove classes for green checker red checker etc
+    // Remove the classes associated with div. since we're not rebuilding the divs.
+    // The classes stick
+    board[originRow][originCol].name = emptyCheckerSpace.name;
+    board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
+    board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
+    // Display CleanUp
+    desiredMovePoints[1].style.border = '';
 
-// Programmatically this works but I need something in here to remove classes for green checker red checker etc
-// Remove the classes associated with div. since we're not rebuilding the divs.
-// The classes stick
-board[originRow][originCol].name = emptyCheckerSpace.name;
-board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
-board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
-// Display CleanUp
-desiredMovePoints[1].style.border = '';
-
-desiredMovePoints = [];
-
-}
+    desiredMovePoints = [];
+    }
+};
 
 
 createGameBoard();
