@@ -122,13 +122,10 @@ $table.addEventListener('click', moveChecker);
 
   // event Listener for board
 var moveChecker = function (event) {
-  console.log('clicked');
-  console.log(event.target);
   $target = event.target;
-  if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer || board[$target.dataset.row][$target.dataset.col].name === 'emptySpace') {
+  if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
     if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
       console.log (" this item has not been previously selected");
-      //&& board[$target.dataset.row][$target.dataset.col].name === currentPlayer
       console.log('selecting it')
       board[$target.dataset.row][$target.dataset.col].isSelected = true;
       if (desiredMovePoints.length <= 2) {
@@ -136,10 +133,16 @@ var moveChecker = function (event) {
       }
     }
 
+
     if (desiredMovePoints.length === 2) {
         console.log('origin: ' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
         moveThaCheckaPieces();
     };
+  } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
+      console.log('selecting the emptySpace')
+      board[$target.dataset.row][$target.dataset.col].isSelected = true;
+      desiredMovePoints.push($target);
+      moveThaCheckaPieces();
   } else {
     console.log(currentPlayer + " didnt select their color checker" );
   };
