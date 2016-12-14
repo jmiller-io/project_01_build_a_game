@@ -30,7 +30,8 @@ var players = [
 ];
 
 var currentPlayer = players[0].name; // starting player is red
-var previousPlayer;
+document.getElementById('playerUp').textContent = currentPlayer;
+var nextPlayer;
 var desiredMovePoints = [];
 
 // board
@@ -124,35 +125,24 @@ var moveChecker = function (event) {
   console.log('clicked');
   console.log(event.target);
   $target = event.target;
-  if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace') {
-      console.log (" this item is not selected");
+  if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer || board[$target.dataset.row][$target.dataset.col].name === 'emptySpace') {
+    if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
+      console.log (" this item has not been previously selected");
+      //&& board[$target.dataset.row][$target.dataset.col].name === currentPlayer
       console.log('selecting it')
       board[$target.dataset.row][$target.dataset.col].isSelected = true;
       if (desiredMovePoints.length <= 2) {
           desiredMovePoints.push($target);
       }
-  }
-
-  if (desiredMovePoints.length === 2) {
-      console.log('origin:' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
-      moveThaCheckaPieces();
-// if current player is green and
-// tile selected board[row][col].name === red and vise versa don't let them click on it
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
+    if (desiredMovePoints.length === 2) {
+        console.log('origin: ' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
+        moveThaCheckaPieces();
+    };
+  } else {
+    console.log(currentPlayer + " didnt select their color checker" );
+  };
 
 renderGame();
 };
@@ -197,7 +187,7 @@ var moveThaCheckaPieces = function () {
   destCol = desiredMovePoints[1].dataset.col;
 
   if (board[destRow][destCol].name !== 'emptySpace') {
-    console.log('You cant jump on opponent. you lost your turn');
+    console.log('You cant jump on opponent. you lose your turn');
     desiredMovePoints[0].style.border = '';
     desiredMovePoints = [];
     return true;
@@ -233,10 +223,24 @@ var moveThaCheckaPieces = function () {
     board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
     // Display CleanUp
     desiredMovePoints[1].style.border = '';
-
     desiredMovePoints = [];
+    switchPlayer();
     }
 };
+
+// function to determine switch player
+var switchPlayer = function () {
+  if (currentPlayer === players[0].name) {
+    currentPlayer = players[1].name;
+  } else if (currentPlayer === players[1].name) {
+    currentPlayer = players[0].name;
+  };
+  document.getElementById('playerUp').textContent = currentPlayer;
+};
+
+
+
+
 
 
 createGameBoard();
