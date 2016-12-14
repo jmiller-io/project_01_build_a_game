@@ -194,12 +194,12 @@ var moveThaCheckaPieces = function () {
   console.log('running move thachecka pieces')
 
   // coordinates of origin
-  originRow = desiredMovePoints[0].dataset.row;
-  originCol = desiredMovePoints[0].dataset.col;
+  originRow = parseInt(desiredMovePoints[0].dataset.row);
+  originCol = parseInt(desiredMovePoints[0].dataset.col);
 
   // get the coordinates for destination
-  destRow = desiredMovePoints[1].dataset.row;
-  destCol = desiredMovePoints[1].dataset.col;
+  destRow = parseInt(desiredMovePoints[1].dataset.row);
+  destCol = parseInt(desiredMovePoints[1].dataset.col);
 
   // create object for reference by destination
   originObject = board[originRow][originCol];
@@ -235,9 +235,48 @@ var moveThaCheckaPieces = function () {
       desiredMovePoints = [];
       switchPlayer();
       // lines 214 -237 go before parentheses on line 255
-    } else {
-      resetPlay();
-    }
+    } else if (destRow - originRow === 2 || destRow - originRow === -2) {
+        console.log ('checking for opponent to jump');
+        middlePieceRow = originRow + 1;
+        middlePieceCol = originCol - 1;
+        $opponent = document.querySelector('[data-row="' + middlePieceRow + '"][data-col="' + middlePieceCol + '"]');
+
+        if (board[middlePieceRow][middlePieceCol].name !== 'emptySpace' || board[middlePieceRow][middlePieceCol].name !== currentPlayer) {
+          console.log('opponent lives here');
+          // remove the properties we don't want to move over
+          board[originRow][originCol].isSelected = false;
+        // Display Cleanup
+        desiredMovePoints[0].style.border = '';
+        desiredMovePoints[0].style.background = '';
+
+        // The destination
+        //desiredMovePoints[1]
+
+        // Set object info to the origin properties
+        board[destRow][destCol].name = originObject.name;
+        board[destRow][destCol].isSelected = originObject.isSelected;
+        board[destRow][destCol].isCrowned = originObject.isCrowned;
+
+        // Programmatically this works but I need something in here to remove classes for green checker red checker etc
+        // Remove the classes associated with div. since we're not rebuilding the divs.
+        // The classes stick
+        board[originRow][originCol].name = emptyCheckerSpace.name;
+        board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
+        board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
+        // Kill Opponent
+        board[middlePieceRow][middlePieceCol].name = emptyCheckerSpace.name;
+        board[middlePieceRow][middlePieceCol].isSelected = emptyCheckerSpace.isSelected;
+        board[middlePieceRow][middlePieceCol].isCrowned = emptyCheckerSpace.isCrowned;
+        $opponent.style.background = '';
+        // Display CleanUp
+        desiredMovePoints[1].style.border = '';
+        desiredMovePoints = [];
+        switchPlayer();
+
+        }
+      } else {
+        resetPlay();
+      }
   } else if (originObject.isCrowned === false && currentPlayer === players[0].name) {
       console.log('not crowned and red')
       if (destRow - originRow === -1 && originCol - destCol === 1 || originCol - destCol === -1) {
@@ -268,9 +307,44 @@ var moveThaCheckaPieces = function () {
       desiredMovePoints = [];
       switchPlayer();
       // lines 214 -237 go before parentheses on line 255
-    } else {
-      resetPlay();
-    }
+    } else if (destRow - originRow === 2 || destRow - originRow === -2) {
+        console.log ('checking for opponent to jump');
+        middlePieceRow = originRow - 1;
+        middlePieceCol = originCol + 1;
+        $opponent = document.querySelector('[data-row="' + middlePieceRow + '"][data-col="' + middlePieceCol + '"]');
+        if (board[middlePieceRow][middlePieceCol].name !== 'emptySpace' || board[middlePieceRow][middlePieceCol].name !== currentPlayer) {
+          console.log('opponent lives here');
+          // remove the properties we don't want to move over
+          board[originRow][originCol].isSelected = false;
+          // Display Cleanup
+          desiredMovePoints[0].style.border = '';
+          desiredMovePoints[0].style.background = '';
+
+          // Set object info to the origin properties
+        board[destRow][destCol].name = originObject.name;
+        board[destRow][destCol].isSelected = originObject.isSelected;
+        board[destRow][destCol].isCrowned = originObject.isCrowned;
+
+        // Programmatically this works but I need something in here to remove classes for green checker red checker etc
+        // Remove the classes associated with div. since we're not rebuilding the divs.
+        // The classes stick
+        board[originRow][originCol].name = emptyCheckerSpace.name;
+        board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
+        board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
+        // Kill Opponent
+        board[middlePieceRow][middlePieceCol].name = emptyCheckerSpace.name;
+        board[middlePieceRow][middlePieceCol].isSelected = emptyCheckerSpace.isSelected;
+        board[middlePieceRow][middlePieceCol].isCrowned = emptyCheckerSpace.isCrowned;
+        $opponent.style.background = '';
+        // Display CleanUp
+        desiredMovePoints[1].style.border = '';
+        //desiredMovePoints = [];
+        switchPlayer();
+
+        }
+      } else {
+        resetPlay();
+      }
   }
   // if (originObject.isCrowned === false && originRow === destRow) {
      // console.log('not permitted piece is not Crowned');
@@ -287,6 +361,12 @@ var moveThaCheckaPieces = function () {
 
 
 };
+
+
+
+
+
+
 
 // function to determine switch player
 var switchPlayer = function () {
