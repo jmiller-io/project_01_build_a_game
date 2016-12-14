@@ -123,6 +123,10 @@ $table.addEventListener('click', moveChecker);
   // event Listener for board
 var moveChecker = function (event) {
   $target = event.target;
+  if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
+    console.log('dont click me')
+    return false;
+  }
   if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
     if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
       console.log (" this item has not been previously selected");
@@ -176,6 +180,9 @@ var renderGame = function () {
           }
           if (board[i][j].isSelected === true) {
             $allDivs[k].style.border = "2px solid yellow";
+          }
+          if (board[i][j].name === 'whiteSpace') {
+            $allDivs[k].classList.add('checker')
           }
         };
        };
