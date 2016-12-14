@@ -20,7 +20,16 @@ var emptyCheckerSpace = {
   isCrowned: false
 };
 
-var currentPlayer = greenChecker;
+var players = [
+  {
+    name: 'red'
+  },
+  {
+    name: 'green'
+  }
+];
+
+var currentPlayer = players[0].name; // starting player is red
 var previousPlayer;
 var desiredMovePoints = [];
 
@@ -38,13 +47,13 @@ var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'g
 // Create Game Board
 
 var createGameBoard = function() {
-  $table = document.createElement('table');
+  var $table = document.createElement('table');
   $table.setAttribute('id', 'table');
   document.body.appendChild($table);
 
   // Create Table Rows 8 of them
   for (var i = 0; i < 8 ; i++) {
-    $tableRow = document.createElement('tr');
+    var $tableRow = document.createElement('tr');
     $tableRow.textContent = " ";
     $table.appendChild($tableRow);
   };
@@ -55,7 +64,7 @@ var createGameBoard = function() {
   // Create Table Cells
   for (var i = 0; i < $allTableRows.length ; i++) {
       for (var j = 0; j < 8; j++) {
-        $tableCell = document.createElement('td');
+        var $tableCell = document.createElement('td');
         $tableCell.classList.add('tableCell');
         $allTableRows[i].appendChild($tableCell);
       };
@@ -69,13 +78,13 @@ var createGameBoard = function() {
           if (i % 2 === 0) {
             if (j % 2 === 0){
               $allTableRows[i].children[j].classList.add('white');
-              $div = document.createElement('div');
+              var $div = document.createElement('div');
               $div.dataset.row=i;
               $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
             } else {
               $allTableRows[i].children[j].classList.add('black');
-              $div = document.createElement('div');
+              var $div = document.createElement('div');
               $div.dataset.row=i;
               $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
@@ -85,13 +94,13 @@ var createGameBoard = function() {
           if (i % 2 === 1) {
             if (j % 2 === 0){
               $allTableRows[i].children[j].classList.add('black');
-              $div = document.createElement('div');
+              var $div = document.createElement('div');
               $div.dataset.row=i;
               $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
             } else {
               $allTableRows[i].children[j].classList.add('white');
-              $div = document.createElement('div');
+              var $div = document.createElement('div');
               $div.dataset.row=i;
               $div.dataset.col=j;
               $allTableRows[i].children[j].appendChild($div);
@@ -127,7 +136,8 @@ var moveChecker = function (event) {
   if (desiredMovePoints.length === 2) {
       console.log('origin:' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
       moveThaCheckaPieces();
-
+// if current player is green and
+// tile selected board[row][col].name === red and vise versa don't let them click on it
 
 
 
