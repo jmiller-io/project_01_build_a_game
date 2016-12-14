@@ -206,6 +206,7 @@ var moveThaCheckaPieces = function () {
   // create object for reference by destination
   originObject = board[originRow][originCol];
 
+  // if not king can't move horizontal
   if (originObject.isCrowned === false && originRow === destRow) {
     console.log('not permitted piece is not Crowned');
     desiredMovePoints[0].style.border = '';
@@ -214,7 +215,10 @@ var moveThaCheckaPieces = function () {
     board[destRow][destCol].isSelected = false;
     desiredMovePoints = [];
     return false;
-  }
+  };
+
+  // if destrow minus origin row equals 1 or -1 okay to move
+  // if origin column plus or minus 1 is filled with checker piece you can jump over
 
   // remove the properties we don't want to move over
   board[originRow][originCol].isSelected = false;
