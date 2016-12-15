@@ -229,14 +229,13 @@ var moveThaCheckaPieces = function () {
 
       objManipulation();
       switchPlayer();
-    } else if (destRow - originRow === 2) {
-        if (destCol - originCol === 2) {
-            middlePieceRow = originRow - 1;
-            middlePieceCol = originCol + 1;
-            console.log('opponent at ' + middlePieceRow + " " + middlePieceCol)
-        } else if (destCol - originCol === -2) {
-            middlePieceRow = originRow - 1;
-            middlePieceCol = originCol - 1;
+    } else if (originRow - destRow === 2) {
+       console.log('jumping opponent')
+        middlePieceRow = originRow - 1;
+        if (destCol > originCol) {
+          middlePieceCol = destCol - 1;
+        } else if (destCol < originCol) {
+          middlePieceCol = destCol + 1;
         }
         checkForOpponent();
       } else {
