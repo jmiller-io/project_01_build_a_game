@@ -1,13 +1,12 @@
 console.log('Linked!');
 
 // Checker identities
-//var greenChecker = 1;
 var greenChecker = {
   name: 'green',
   isSelected: false,
   isCrowned: false
 };
-//var redChecker = 2;
+
 var redChecker = {
   name: 'red',
   isSelected: true,
@@ -259,17 +258,12 @@ var checkForOpponent = function () {
           desiredMovePoints[0].style.border = '';
           desiredMovePoints[0].style.background = '';
 
-          // The destination
-          //desiredMovePoints[1]
-
           // Set object info to the origin properties
           board[destRow][destCol].name = originObject.name;
           board[destRow][destCol].isSelected = originObject.isSelected;
           board[destRow][destCol].isCrowned = originObject.isCrowned;
 
           // Programmatically this works but I need something in here to remove classes for green checker red checker etc
-          // Remove the classes associated with div. since we're not rebuilding the divs.
-          // The classes stick
           board[originRow][originCol].name = emptyCheckerSpace.name;
           board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
           board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
@@ -281,6 +275,7 @@ var checkForOpponent = function () {
           // Display CleanUp
           desiredMovePoints[1].style.border = '';
           desiredMovePoints = [];
+          winner();
           switchPlayer();
         };
 };
@@ -334,5 +329,27 @@ var resetPlay = function () {
       desiredMovePoints = [];
       return false;
 }
+
+
+// function for calculating winner
+var winner = function () {
+  var red;
+  var green;
+  for(var i = 0; i < board.length; i++){
+    for (var j = 0; j <board[i].length; j++) {
+      if (board[i][j].name === "red"){
+        red = 1;
+      } else if (board[i][j].name === "green") {
+        green = 1;
+      };
+    };
+  };
+
+  if (red !== 1) {
+    alert('Green Wins!');
+  } else if (green !== 1) {
+    alert('Red Wins!');
+  };
+};
 
 createGameBoard();

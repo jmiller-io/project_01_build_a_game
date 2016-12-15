@@ -27,13 +27,6 @@ body {
 
 }
 
-/*.greenChecker {
-  background-color: green;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}*/
-
 .checker {
   border-radius: 50%;
   /*background-color: red;*/
@@ -41,13 +34,22 @@ body {
   height: 50px;
 }
 
-/*.selected {
-  border: 2px solid yellow;
-}*/
-
 .emptyTileCells {
   border-radius: 50%;
   background-color: rgba(0,0,0,0);
   width: 50px;
   height: 50px;
+}
+
+.left {
+  text-align: left;
+  border: 1px solid black;
+  display: inline-block;
+  margin-right: 10em;
+}
+
+.right {
+  text-align: right;
+  border: 1px solid black;
+  display: inline-block;
 }
