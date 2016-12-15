@@ -36,7 +36,7 @@ var desiredMovePoints = [];
 // board
 var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false}],
              [{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false}],
-             [{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false}],
+             [{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: true},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'green', isSelected:false, isCrowned: false}],
              [{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'emptySpace', isSelected:false, isCrowned: false}],
              [{name: 'red', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false},{name: 'red', isSelected:false, isCrowned: false},{name: 'whiteSpace', isSelected:false, isCrowned: false}],
@@ -204,6 +204,7 @@ var moveThaCheckaPieces = function () {
   // create object for reference by destination
   originObject = board[originRow][originCol];
 
+
   // if green and not king can't move more than one piece
   if (originObject.isCrowned === false && currentPlayer === players[1].name) {
     console.log('not crowned and green');
@@ -246,6 +247,12 @@ var moveThaCheckaPieces = function () {
   };
 };
 
+// function for crowned checker movement
+var crownMove = function () {
+  if (originObject.isCrowned === true){
+    objManipulation();
+  }
+};
 
 // function for checking for opponent
 var checkForOpponent = function () {
@@ -334,7 +341,6 @@ var resetPlay = function () {
       return false;
 }
 
-
 // Function for determining if checker should be Crowned
 var crown = function() {
   console.log('Crown it');
@@ -344,6 +350,10 @@ var crown = function() {
     board[destRow][destCol].isCrowned = true;
   }
 }
+
+
+
+
 
 
 // function for calculating winner
@@ -366,12 +376,5 @@ var winner = function () {
     alert('Red Wins!');
   };
 };
-
-
-// function for crowned checker movement
-var crownMove = function () {
-
-
-}
 
 createGameBoard();
