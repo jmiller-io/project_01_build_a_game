@@ -5,21 +5,21 @@ var greenChecker = {
   name: 'green',
   isSelected: false,
   isCrowned: false,
-  direction: 'forward'
+  direction: 1
 };
 
 var redChecker = {
   name: 'red',
   isSelected: true,
   isCrowned: false,
-  direction: 'forward'
+  direction: -1
 };
 
 var emptyCheckerSpace = {
   name: 'emptySpace',
   isSelected: false,
   isCrowned: false,
-  direction: 'forward'
+  direction: null
 };
 
 var players = [
@@ -33,7 +33,6 @@ var players = [
 
 var currentPlayer = players[1].name; // starting player is green
 document.getElementById('playerUp').textContent = currentPlayer;
-var nextPlayer;
 var desiredMovePoints = [];
 
 // board
@@ -77,7 +76,6 @@ var createGameBoard = function() {
 
   // Add Event Listener to board
   $table.addEventListener('click', selectMove);
-  //$table.addEventListener('dblclick', moveChecker);
 };
 
 // event Listener for board
@@ -211,8 +209,8 @@ var moveThaCheckaPieces = function () {
   // if green and not king can't move more than one piece
   if (!originObject.isCrowned && currentPlayer === 'green') {
     console.log('not crowned and green');
-    if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === 1 && originCol - destCol === -1) {
-      console.log('Valid move. no jump')
+    if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
+      console.log('Valid move. no jump');
 
       objManipulation();
       switchPlayer();
@@ -230,9 +228,10 @@ var moveThaCheckaPieces = function () {
       }
   } else if (!originObject.isCrowned && currentPlayer === 'red') {
     // TODO can we use object.direction as -1 +1 or something?
+    /// TODO DONE
     //red is -1
       console.log('not crowned and red')
-      if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === -1 && originCol - destCol === -1) {
+      if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
       console.log('Valid move')
 
       objManipulation();
@@ -249,6 +248,9 @@ var moveThaCheckaPieces = function () {
       } else {
         resetPlay();
       };
+  } else {
+    Console.log('you cant jump a white space');
+    resetPlay();
   };
 };
 
@@ -266,7 +268,11 @@ var checkForOpponent = function () {
 
         $opponent = document.querySelector('[data-row="' + middlePieceRow + '"][data-col="' + middlePieceCol + '"]');
 
-        if (board[middlePieceRow][middlePieceCol].name !== 'emptySpace' || board[middlePieceRow][middlePieceCol].name !== currentPlayer) {
+        if(board[middlePieceRow][middlePieceCol].name === 'emptySpace' || board[middlePieceRow][middlePieceCol].name === currentPlayer || board[middlePieceRow][middlePieceCol].name === 'whiteSpace') {
+          console.log('no good');
+          console.log('not a valid move');
+          resetPlay();
+        } else {
           console.log('opponent lives here');
           // remove the properties we don't want to move over
           board[originRow][originCol].isSelected = false;
@@ -275,28 +281,28 @@ var checkForOpponent = function () {
           desiredMovePoints[0].style.background = '';
 
           // Set object info to the origin properties
-          board[destRow][destCol].name = originObject.name;
-          board[destRow][destCol].isSelected = originObject.isSelected;
-          board[destRow][destCol].isCrowned = originObject.isCrowned;
-          board[destRow][destCol].direction = originObject.direction;
+          for (var k in originObject) {
+            board[destRow][destCol][k] = originObject[k];
+          };
+
           crown();
-          // Programmatically this works but I need something in here to remove classes for green checker red checker etc
-          board[originRow][originCol].name = emptyCheckerSpace.name;
-          board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
-          board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
-          board[originRow][originCol].direction = emptyCheckerSpace.direction;
+
+          for (var k in emptyCheckerSpace) {
+            board[originRow][originCol][k] = emptyCheckerSpace[k];
+          };
+
           // Kill Opponent
-          board[middlePieceRow][middlePieceCol].name = emptyCheckerSpace.name;
-          board[middlePieceRow][middlePieceCol].isSelected = emptyCheckerSpace.isSelected;
-          board[middlePieceRow][middlePieceCol].isCrowned = emptyCheckerSpace.isCrowned;
-          board[middlePieceRow][middlePieceCol].direction = emptyCheckerSpace.direction;
+          for (var k in emptyCheckerSpace) {
+            board[middlePieceRow][middlePieceCol][k] = emptyCheckerSpace[k];
+          };
+
           $opponent.style.background = '';
           // Display CleanUp
           desiredMovePoints[1].style.border = '';
           desiredMovePoints = [];
           determineWinner();
           switchPlayer();
-        };
+        }
 };
 
 
@@ -314,16 +320,13 @@ var objManipulation = function () {
       // Set object info to the origin properties
       // TODO can we just reassign the object's index in the array?
       // board[destRow][destCol] = originObject
-      board[destRow][destCol].name = originObject.name;
-      board[destRow][destCol].isSelected = originObject.isSelected;
-      board[destRow][destCol].isCrowned = originObject.isCrowned;
-      board[destRow][destCol].direction = originObject.direction;
+      for (var k in originObject) {
+            board[destRow][destCol][k] = originObject[k];
+      };
       crown();
-
-      board[originRow][originCol].name = emptyCheckerSpace.name;
-      board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
-      board[originRow][originCol].isCrowned = emptyCheckerSpace.isCrowned;
-      board[originRow][originCol].direction = emptyCheckerSpace.direction;
+      for (var k in emptyCheckerSpace) {
+            board[originRow][originCol][k] = emptyCheckerSpace[k];
+      };
 
       // Display CleanUp
       desiredMovePoints[1].style.border = '';
@@ -354,13 +357,13 @@ var resetPlay = function () {
 
 // Function for determining if checker should be Crowned
 var crown = function() {
-  console.log('Crown it');
+  console.log('Crown it?');
   // for green checker if it reaches destination row of 7 crown it
   if (currentPlayer === "green" && destRow === 7 || currentPlayer === "red" && destRow === 0) {
     console.log('crown the checker');
     board[destRow][destCol].isCrowned = true;
-  }
-}
+  };
+};
 
 
 // function for determining winner
