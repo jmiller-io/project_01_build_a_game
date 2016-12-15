@@ -41,7 +41,7 @@ var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false, direction
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1}],
              [{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null}],
-             [{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
+             [{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1}],
              [{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}]
 ];
@@ -78,6 +78,7 @@ var createGameBoard = function() {
   $table.addEventListener('click', selectMove);
 };
 
+
 // event Listener for board
 var selectMove = function (event) {
   $target = event.target;
@@ -86,7 +87,7 @@ var selectMove = function (event) {
     return false;
   };
   if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
-    if (board[$target.dataset.row][$target.dataset.col].isSelected === false && board[$target.dataset.row][$target.dataset.col].name !== 'whiteSpace' ) {
+    if (board[$target.dataset.row][$target.dataset.col].isSelected === false ) {
       console.log (" this item has not been previously selected");
       console.log('selecting it');
       board[$target.dataset.row][$target.dataset.col].isSelected = true;
@@ -205,9 +206,26 @@ var moveThaCheckaPieces = function () {
   // create object for reference by destination
   originObject = board[originRow][originCol];
 
-
-  // if green and not king can't move more than one piece
-  if (!originObject.isCrowned && currentPlayer === 'green') {
+  if (originObject.isCrowned === true){
+    console.log('it is a crown!')
+    if (destRow - originRow === 1 || destRow - originRow === -1 ) {
+      console.log('moved one space');
+      objManipulation();
+      switchPlayer();
+    } else if (destRow - originRow === 2 || originRow - destRow === 2) {
+      console.log('jumping opponent');
+      middlePieceRow = destRow - 1;
+        if (destCol > originCol) {
+          middlePieceCol = destCol - 1;
+        } else if (destCol < originCol) {
+          middlePieceCol = destCol + 1;
+        }
+        checkForOpponent();
+      } else {
+        resetPlay();
+    }
+  } else if (!originObject.isCrowned && currentPlayer === 'green') {
+    // if green and not king can't move more than one piece
     console.log('not crowned and green');
     if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
       console.log('Valid move. no jump');
@@ -257,9 +275,9 @@ var moveThaCheckaPieces = function () {
 // function for crowned checker movement
 var crownMove = function () {
   if (originObject.isCrowned === true){
+    console.log('it is a crown!')
     objManipulation();
-    checkForOpponent();
-  }
+  };
 };
 
 // function for checking for opponent
