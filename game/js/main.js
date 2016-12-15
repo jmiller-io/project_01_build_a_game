@@ -181,6 +181,9 @@ var renderGame = function () {
           if (board[i][j].name === 'whiteSpace') {
             $allDivs[k].classList.add('checker')
           };
+          if (board[i][j].isCrowned === true){
+            $allDivs[k].style.backgroundImage = "url('images/crown.png')"
+          }
         };
        };
     };
@@ -262,7 +265,7 @@ var checkForOpponent = function () {
           board[destRow][destCol].name = originObject.name;
           board[destRow][destCol].isSelected = originObject.isSelected;
           board[destRow][destCol].isCrowned = originObject.isCrowned;
-
+          crown();
           // Programmatically this works but I need something in here to remove classes for green checker red checker etc
           board[originRow][originCol].name = emptyCheckerSpace.name;
           board[originRow][originCol].isSelected = emptyCheckerSpace.isSelected;
@@ -296,6 +299,7 @@ var objManipulation = function () {
       board[destRow][destCol].name = originObject.name;
       board[destRow][destCol].isSelected = originObject.isSelected;
       board[destRow][destCol].isCrowned = originObject.isCrowned;
+      crown();
 
       // Programmatically this works but I need something in here to remove classes for green checker red checker etc
       // Remove the classes associated with div. since we're not rebuilding the divs.
@@ -328,6 +332,17 @@ var resetPlay = function () {
       board[destRow][destCol].isSelected = false;
       desiredMovePoints = [];
       return false;
+}
+
+
+// Function for determining if checker should be Crowned
+var crown = function() {
+  console.log('Crown it');
+  // for green checker if it reaches destination row of 7 crown it
+  if (currentPlayer === "green" && destRow === 7 || currentPlayer === "red" && destRow === 0) {
+    console.log('crown the checker');
+    board[destRow][destCol].isCrowned = true;
+  }
 }
 
 
