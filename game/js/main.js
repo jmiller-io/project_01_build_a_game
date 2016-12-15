@@ -367,4 +367,11 @@ var winner = function () {
   };
 };
 
+
+// function for crowned checker movement
+var crownMove = function () {
+
+
+}
+
 createGameBoard();
