@@ -206,6 +206,12 @@ var moveThaCheckaPieces = function () {
   // create object for reference by destination
   originObject = board[originRow][originCol];
 
+  if (destCol === originCol) {
+      console.log('invalid move');
+      resetPlay();
+      return false;
+  };
+
 // Crowned Checker movement
   if (originObject.isCrowned === true){
     console.log('it is a crown!')
