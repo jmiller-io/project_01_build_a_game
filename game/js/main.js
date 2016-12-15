@@ -37,12 +37,12 @@ var desiredMovePoints = [];
 
 // board
 var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1}],
-             [{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
-             [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1}],
+             [{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
+             [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: true, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1}],
              [{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null}],
-             [{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
-             [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1}],
+             [{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
+             [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1}],
              [{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}]
 ];
 
@@ -206,15 +206,19 @@ var moveThaCheckaPieces = function () {
   // create object for reference by destination
   originObject = board[originRow][originCol];
 
+// Crowned Checker movement
   if (originObject.isCrowned === true){
     console.log('it is a crown!')
     if (destRow - originRow === 1 || destRow - originRow === -1 ) {
       console.log('moved one space');
       objManipulation();
       switchPlayer();
-    } else if (destRow - originRow === 2 || originRow - destRow === 2) {
-      console.log('jumping opponent');
-      middlePieceRow = destRow - 1;
+      return;
+    }
+
+    if (destRow - originRow === 2) {
+        console.log('green jumping forward opponent red backwards');
+        middlePieceRow = destRow - 1;
         if (destCol > originCol) {
           middlePieceCol = destCol - 1;
         } else if (destCol < originCol) {
@@ -222,8 +226,21 @@ var moveThaCheckaPieces = function () {
         }
         checkForOpponent();
       } else {
-        resetPlay();
-    }
+        console.log('green is jumping backwards over opponent red forwards');
+        // It is messed up here deletes both checker pieces
+
+        if (originRow - destRow === 2) {
+       console.log('jumping opponent')
+        middlePieceRow = originRow - 1;
+        if (destCol > originCol) {
+          middlePieceCol = destCol - 1;
+        } else if (destCol < originCol) {
+          middlePieceCol = destCol + 1;
+        }
+        checkForOpponent();
+        }
+    };
+
   } else if (!originObject.isCrowned && currentPlayer === 'green') {
     // if green and not king can't move more than one piece
     console.log('not crowned and green');
