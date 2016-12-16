@@ -81,16 +81,21 @@ var createGameBoard = function() {
 
 // event Listener for board
 var selectMove = function (event) {
+  if (event.target.nodeName === "TD") {
+    return false;
+  };
+
+
+
+
+
   $target = event.target;
   if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
-    console.log('dont click me');
     return false;
   };
   if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
     if (board[$target.dataset.row][$target.dataset.col].isSelected === false ) {
-      console.log (" this item has not been previously selected");
-      console.log('selecting it');
-      board[$target.dataset.row][$target.dataset.col].isSelected = true;
+        board[$target.dataset.row][$target.dataset.col].isSelected = true;
       if (desiredMovePoints.length <= 2) {
           desiredMovePoints.push($target);
       };
@@ -98,16 +103,12 @@ var selectMove = function (event) {
 
 
     if (desiredMovePoints.length === 2) {
-        console.log('origin: ' + desiredMovePoints[0].name + 'destination: ' + desiredMovePoints[1].name);
         moveThaCheckaPieces();
     };
   } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
-      console.log('selecting the emptySpace');
       board[$target.dataset.row][$target.dataset.col].isSelected = true;
       desiredMovePoints.push($target);
       moveThaCheckaPieces();
-  } else {
-    console.log(currentPlayer + " didnt select their color checker" );
   };
 
 renderGame();
@@ -119,7 +120,6 @@ renderGame();
 var colorTiles = function () {
   // Color in tiles and also create the divs for the checker pieces
   for (var i = 0; i < $allTableRows.length; i++) {
-    console.log('Table Row: ' + $allTableRows[i]);
     for (var j = 0; j < $allTableRows[i].children.length; j++){
           if (i % 2 === 0) {
             if (j % 2 === 0){
@@ -193,7 +193,6 @@ var renderGame = function () {
 };
 
 var moveThaCheckaPieces = function () {
-  console.log('running move thachecka pieces')
 
   // coordinates of origin
   originRow = parseInt(desiredMovePoints[0].dataset.row);
@@ -214,9 +213,7 @@ var moveThaCheckaPieces = function () {
 
 // Crowned Checker movement
   if (originObject.isCrowned === true){
-    console.log('it is a crown!')
     if (destRow - originRow === 1 || destRow - originRow === -1 ) {
-      console.log('moved one space');
       objManipulation();
       switchPlayer();
       return;
