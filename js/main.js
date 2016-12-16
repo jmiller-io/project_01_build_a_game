@@ -41,7 +41,7 @@ var board = [[{name: 'whiteSpace', isSelected:false, isCrowned: false, direction
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'green', isSelected:false, isCrowned: false, direction: 1}],
              [{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'emptySpace', isSelected:false, isCrowned: false, direction: null}],
-             [{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
+             [{name: 'red', isSelected:false, isCrowned: true, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}],
              [{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1}],
              [{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null},{name: 'red', isSelected:false, isCrowned: false, direction: -1},{name: 'whiteSpace', isSelected:false, isCrowned: false, direction: null}]
 ];
@@ -213,6 +213,11 @@ var moveThaCheckaPieces = function () {
 
 // Crowned Checker movement
   if (originObject.isCrowned === true){
+    if (board[destRow][destCol].name === currentPlayer){
+        console.log('same piece');
+        resetPlay();
+        return false;
+      };
     if (destRow - originRow === 1 || destRow - originRow === -1 ) {
       objManipulation();
       switchPlayer();
@@ -247,12 +252,18 @@ var moveThaCheckaPieces = function () {
   } else if (!originObject.isCrowned && currentPlayer === 'green') {
     // if green and not king can't move more than one piece
     console.log('not crowned and green');
-    if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
+    if (board[destRow][destCol].name === currentPlayer){
+      console.log('same piece');
+      resetPlay();
+      return false;
+    };
+      if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
       console.log('Valid move. no jump');
 
       objManipulation();
       switchPlayer();
-    } else if (destRow - originRow === 2) {
+    }
+   else if (destRow - originRow === 2) {
         console.log('jumping opponent')
         middlePieceRow = destRow - 1;
         if (destCol > originCol) {
@@ -264,12 +275,17 @@ var moveThaCheckaPieces = function () {
       } else {
         resetPlay();
       }
-  } else if (!originObject.isCrowned && currentPlayer === 'red') {
+} else if (!originObject.isCrowned && currentPlayer === 'red') {
     // TODO can we use object.direction as -1 +1 or something?
     /// TODO DONE
     //red is -1
       console.log('not crowned and red')
-      if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
+      if (board[destRow][destCol].name === currentPlayer){
+        console.log('same piece');
+        resetPlay();
+        return false;
+      };
+      if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1 && board[destRow][destCol].name !== currentPlayer) {
       console.log('Valid move')
 
       objManipulation();
@@ -289,7 +305,7 @@ var moveThaCheckaPieces = function () {
   } else {
     Console.log('you cant jump a white space');
     resetPlay();
-  };
+    };
 };
 
 // function for crowned checker movement
@@ -358,6 +374,7 @@ var objManipulation = function () {
       // Set object info to the origin properties
       // TODO can we just reassign the object's index in the array?
       // board[destRow][destCol] = originObject
+      // couldn't get it to work with an object so i have a for object keys
       for (var k in originObject) {
             board[destRow][destCol][k] = originObject[k];
       };
