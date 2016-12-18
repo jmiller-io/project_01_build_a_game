@@ -207,7 +207,7 @@ var moveThaCheckaPieces = function() {
             return false;
         };
         if (destRow - originRow === 1 || destRow - originRow === -1) {
-            objManipulation();
+            movePieceCleanUp();
             switchPlayer();
             return;
         };
@@ -247,7 +247,7 @@ var moveThaCheckaPieces = function() {
         if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
             console.log('Valid move. no jump');
 
-            objManipulation();
+            movePieceCleanUp();
             switchPlayer();
         } else if (destRow - originRow === 2) {
             console.log('jumping opponent')
@@ -274,7 +274,7 @@ var moveThaCheckaPieces = function() {
         if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1 && board[destRow][destCol].name !== currentPlayer) {
             console.log('Valid move')
 
-            objManipulation();
+            movePieceCleanUp();
             switchPlayer();
         } else if (originRow - destRow === 2) {
             console.log('jumping opponent')
@@ -291,14 +291,6 @@ var moveThaCheckaPieces = function() {
     } else {
         Console.log('you cant jump a white space');
         resetPlay();
-    };
-};
-
-// function for crowned checker movement
-var crownMove = function() {
-    if (originObject.isCrowned === true) {
-        console.log('it is a crown!')
-        objManipulation();
     };
 };
 
@@ -346,16 +338,13 @@ var checkForOpponent = function() {
 };
 
 
-// function for origin and destination checker array object manipulation
-var objManipulation = function() {
+// function for setting selected object propertie values in array and cleaning up display to make a move
+var movePieceCleanUp = function() {
     // remove the properties we don't want to move over
     board[originRow][originCol].isSelected = false;
     // Display Cleanup
     desiredMovePoints[0].style.border = '';
     desiredMovePoints[0].style.background = '';
-
-    // The destination
-    //desiredMovePoints[1]
 
     // Set object info to the origin properties
     // TODO can we just reassign the object's index in the array?
@@ -375,7 +364,7 @@ var objManipulation = function() {
 }
 
 
-// function to determine switch player
+// function to switch players
 var switchPlayer = function() {
     if (currentPlayer === players[0].name) {
         currentPlayer = players[1].name;
@@ -402,7 +391,9 @@ var crown = function() {
     // for green checker if it reaches destination row of 7 crown it
     if (currentPlayer === "green" && destRow === 7 || currentPlayer === "red" && destRow === 0) {
         console.log('crown the checker');
-        board[destRow][destCol].isCrowned = true;
+        if(!board[destRow][destCol].isCrowned){
+            board[destRow][destCol].isCrowned = true;
+        };
     };
 };
 
