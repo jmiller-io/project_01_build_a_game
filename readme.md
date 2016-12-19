@@ -11,8 +11,8 @@ Be the first to eliminate your opponent and win.
 
 Game Play
 
-The game starts with the green checkers and alternates players.
-Each player must make only one move per turn and moving forward one black tile at a time.
-Players may jump opponents to remove the piece from the game board.
-If a player's checker reaches the other side of the board it is crowned and can now move backwards and forwards claiming opponents along the way.
-The first player to eliminate all opponent checkers wins the game.
+- The game starts with the green checkers and alternates players.
+- Each player must make only one move per turn and moving forward one black tile at a time.
+- Players may jump opponents to remove the piece from the game board.
+- If a player's checker reaches the other side of the board it is crowned and can now move backwards and forwards claiming opponents along the way.
+- The first player to eliminate all opponent checkers wins the game.
