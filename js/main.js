@@ -53,7 +53,7 @@ var createGameBoard = function() {
         var $tableRow = document.createElement('tr');
         $tableRow.textContent = " ";
         $table.appendChild($tableRow);
-    };
+    }
 
     // Get Table Rows
     $allTableRows = document.querySelectorAll('tr');
@@ -64,8 +64,8 @@ var createGameBoard = function() {
             var $tableCell = document.createElement('td');
             $tableCell.classList.add('tableCell');
             $allTableRows[i].appendChild($tableCell);
-        };
-    };
+        }
+    }
 
     colorTiles();
     renderGame();
@@ -79,27 +79,27 @@ var createGameBoard = function() {
 var selectMove = function(event) {
     if (event.target.nodeName === "TD") {
         return false;
-    };
+    }
 
     $target = event.target;
     if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
         return false;
-    };
+    }
     if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
         if (board[$target.dataset.row][$target.dataset.col].isSelected === false) {
             board[$target.dataset.row][$target.dataset.col].isSelected = true;
             if (desiredMovePoints.length <= 2) {
                 desiredMovePoints.push($target);
-            };
-        };
+            }
+        }
         if (desiredMovePoints.length === 2) {
             moveThaCheckaPieces();
-        };
+        }
     } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
         board[$target.dataset.row][$target.dataset.col].isSelected = true;
         desiredMovePoints.push($target);
         moveThaCheckaPieces();
-    };
+    }
 
     renderGame();
 };
@@ -124,7 +124,7 @@ var colorTiles = function() {
                     $div.dataset.col = j;
                     $allTableRows[i].children[j].appendChild($div);
                 }
-            };
+            }
 
             if (i % 2 === 1) {
                 if (j % 2 === 0) {
@@ -139,10 +139,10 @@ var colorTiles = function() {
                     $div.dataset.row = i;
                     $div.dataset.col = j;
                     $allTableRows[i].children[j].appendChild($div);
-                };
-            };
-        };
-    };
+                }
+            }
+        }
+    }
 };
 
 // Render Game
@@ -158,27 +158,27 @@ var renderGame = function() {
                     if (board[i][j].name === 'green') {
                         $allDivs[k].classList.add('checker');
                         $allDivs[k].style.background = "green";
-                    };
+                    }
                     if (board[i][j].name === 'red') {
                         $allDivs[k].classList.add('checker');
                         $allDivs[k].style.background = "red";
-                    };
+                    }
                     if (board[i][j].name === 'emptySpace') {
                         $allDivs[k].classList.add('checker');
-                    };
+                    }
                     if (board[i][j].isSelected === true) {
                         $allDivs[k].style.border = "2px solid yellow";
-                    };
+                    }
                     if (board[i][j].name === 'whiteSpace') {
                         $allDivs[k].classList.add('checker');
-                    };
+                    }
                     if (board[i][j].isCrowned === true) {
                         $allDivs[k].style.backgroundImage = "url('images/crown.png')";
-                    };
-                };
-            };
-        };
-    };
+                    }
+                }
+            }
+        }
+    }
 };
 
 var moveThaCheckaPieces = function() {
@@ -197,7 +197,7 @@ var moveThaCheckaPieces = function() {
         console.log('invalid move');
         resetPlay();
         return false;
-    };
+    }
 
     // Crowned Checker movement
     if (originObject.isCrowned === true) {
@@ -205,12 +205,12 @@ var moveThaCheckaPieces = function() {
             console.log('same piece');
             resetPlay();
             return false;
-        };
+        }
         if (destRow - originRow === 1 || destRow - originRow === -1) {
             movePieceCleanUp();
             switchPlayer();
             return;
-        };
+        }
 
         if (destRow - originRow === 2) {
             console.log('green jumping forward opponent red backwards');
@@ -225,16 +225,16 @@ var moveThaCheckaPieces = function() {
             console.log('green is jumping backwards over opponent red forwards');
 
             if (originRow - destRow === 2) {
-                console.log('jumping opponent')
+                console.log('jumping opponent');
                 middlePieceRow = originRow - 1;
                 if (destCol > originCol) {
                     middlePieceCol = destCol - 1;
                 } else if (destCol < originCol) {
                     middlePieceCol = destCol + 1;
-                };
+                }
                 checkForOpponent();
-            };
-        };
+            }
+        }
 
     } else if (!originObject.isCrowned && currentPlayer === 'green') {
         // if green and not king can't move more than one piece
@@ -243,14 +243,14 @@ var moveThaCheckaPieces = function() {
             console.log('same piece');
             resetPlay();
             return false;
-        };
+        }
         if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1) {
             console.log('Valid move. no jump');
 
             movePieceCleanUp();
             switchPlayer();
         } else if (destRow - originRow === 2) {
-            console.log('jumping opponent')
+            console.log('jumping opponent');
             middlePieceRow = destRow - 1;
             if (destCol > originCol) {
                 middlePieceCol = destCol - 1;
@@ -265,19 +265,19 @@ var moveThaCheckaPieces = function() {
         // TODO can we use object.direction as -1 +1 or something?
         /// TODO DONE
         //red is -1
-        console.log('not crowned and red')
+        console.log('not crowned and red');
         if (board[destRow][destCol].name === currentPlayer) {
             console.log('same piece');
             resetPlay();
             return false;
-        };
+        }
         if (destRow - originRow === originObject.direction && originCol - destCol === 1 || destRow - originRow === originObject.direction && originCol - destCol === -1 && board[destRow][destCol].name !== currentPlayer) {
-            console.log('Valid move')
+            console.log('Valid move');
 
             movePieceCleanUp();
             switchPlayer();
         } else if (originRow - destRow === 2) {
-            console.log('jumping opponent')
+            console.log('jumping opponent');
             middlePieceRow = originRow - 1;
             if (destCol > originCol) {
                 middlePieceCol = destCol - 1;
@@ -287,11 +287,11 @@ var moveThaCheckaPieces = function() {
             checkForOpponent();
         } else {
             resetPlay();
-        };
+        }
     } else {
         Console.log('you cant jump a white space');
         resetPlay();
-    };
+    }
 };
 
 // function for checking for opponent
@@ -315,18 +315,18 @@ var checkForOpponent = function() {
         // Set object info to the origin properties
         for (var k in originObject) {
             board[destRow][destCol][k] = originObject[k];
-        };
+        }
 
         crown();
 
         for (var k in emptyCheckerSpace) {
             board[originRow][originCol][k] = emptyCheckerSpace[k];
-        };
+        }
 
         // Kill Opponent
         for (var k in emptyCheckerSpace) {
             board[middlePieceRow][middlePieceCol][k] = emptyCheckerSpace[k];
-        };
+        }
 
         $opponent.style.background = '';
         // Display CleanUp
@@ -352,16 +352,16 @@ var movePieceCleanUp = function() {
     // couldn't get it to work with an object so i have a for object keys
     for (var k in originObject) {
         board[destRow][destCol][k] = originObject[k];
-    };
+    }
     crown();
     for (var k in emptyCheckerSpace) {
         board[originRow][originCol][k] = emptyCheckerSpace[k];
-    };
+    }
 
     // Display CleanUp
     desiredMovePoints[1].style.border = '';
     desiredMovePoints = [];
-}
+};
 
 
 // function to switch players
@@ -370,13 +370,13 @@ var switchPlayer = function() {
         currentPlayer = players[1].name;
     } else if (currentPlayer === players[1].name) {
         currentPlayer = players[0].name;
-    };
+    }
     document.getElementById('playerUp').textContent = currentPlayer;
 };
 
 // function for resetting play
 var resetPlay = function() {
-    console.log('resetting play')
+    console.log('resetting play');
     desiredMovePoints[0].style.border = '';
     desiredMovePoints[1].style.border = '';
     board[originRow][originCol].isSelected = false;
@@ -393,8 +393,8 @@ var crown = function() {
         console.log('crown the checker');
         if(!board[destRow][destCol].isCrowned){
             board[destRow][destCol].isCrowned = true;
-        };
-    };
+        }
+    }
 };
 
 
@@ -409,15 +409,15 @@ var determineWinner = function() {
                 red = 1;
             } else if (board[i][j].name === "green") {
                 green = 1;
-            };
-        };
-    };
+            }
+        }
+    }
 
     if (red !== 1) {
         alert('Green Wins!');
     } else if (green !== 1) {
         alert('Red Wins!');
-    };
+    }
 };
 
 
