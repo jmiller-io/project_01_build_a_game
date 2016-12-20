@@ -59,11 +59,11 @@ var createGameBoard = function() {
     $allTableRows = document.querySelectorAll('tr');
 
     // Create Table Cells
-    for (var i = 0; i < $allTableRows.length; i++) {
+    for (var n = 0; n < $allTableRows.length; n++) {
         for (var j = 0; j < 8; j++) {
             var $tableCell = document.createElement('td');
             $tableCell.classList.add('tableCell');
-            $allTableRows[i].appendChild($tableCell);
+            $allTableRows[n].appendChild($tableCell);
         }
     }
 
@@ -319,13 +319,13 @@ var checkForOpponent = function() {
 
         crown();
 
-        for (var k in emptyCheckerSpace) {
-            board[originRow][originCol][k] = emptyCheckerSpace[k];
+        for (var l in emptyCheckerSpace) {
+            board[originRow][originCol][l] = emptyCheckerSpace[l];
         }
 
         // Kill Opponent
-        for (var k in emptyCheckerSpace) {
-            board[middlePieceRow][middlePieceCol][k] = emptyCheckerSpace[k];
+        for (var m in emptyCheckerSpace) {
+            board[middlePieceRow][middlePieceCol][m] = emptyCheckerSpace[m];
         }
 
         $opponent.style.background = '';
@@ -354,8 +354,8 @@ var movePieceCleanUp = function() {
         board[destRow][destCol][k] = originObject[k];
     }
     crown();
-    for (var k in emptyCheckerSpace) {
-        board[originRow][originCol][k] = emptyCheckerSpace[k];
+    for (var p in emptyCheckerSpace) {
+        board[originRow][originCol][p] = emptyCheckerSpace[p];
     }
 
     // Display CleanUp
