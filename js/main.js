@@ -27,7 +27,7 @@ var players = [{
 }];
 
 var currentPlayer = players[1].name; // starting player is green
-document.getElementById('playerUp').textContent = currentPlayer;
+$('#playerUp').text(currentPlayer);
 var desiredMovePoints = [];
 
 // board
@@ -44,26 +44,26 @@ var board = [
 
 // Create Game Board
 var createGameBoard = function() {
-    var $table = document.createElement('table');
-    $table.setAttribute('id', 'table');
-    document.body.appendChild($table);
+    var $table = jQuery('<table>');
+    jQuery($table).attr('id', 'table')
+    jQuery($table).appendTo('body')
 
     // Create Table Rows 8 of them
     for (var i = 0; i < 8; i++) {
-        var $tableRow = document.createElement('tr');
-        $tableRow.textContent = " ";
-        $table.appendChild($tableRow);
+        var $tableRow = $('<tr>');
+        jQuery($tableRow).text('');
+        jQuery($tableRow).appendTo($table)
     }
 
     // Get Table Rows
-    $allTableRows = document.querySelectorAll('tr');
+    $allTableRows = $('tr');
 
     // Create Table Cells
     for (var n = 0; n < $allTableRows.length; n++) {
         for (var j = 0; j < 8; j++) {
-            var $tableCell = document.createElement('td');
-            $tableCell.classList.add('tableCell');
-            $allTableRows[n].appendChild($tableCell);
+            var $tableCell = $('<td>');
+            jQuery($tableCell).addClass('tableCell');
+            jQuery($allTableRows[n]).append($tableCell);
         }
     }
 
@@ -71,7 +71,7 @@ var createGameBoard = function() {
     renderGame();
 
     // Add Event Listener to board
-    $table.addEventListener('click', selectMove);
+    jQuery($table).on('click', selectMove);
 };
 
 
