@@ -81,13 +81,13 @@ var selectMove = function(event) {
         return false;
     }
 
-    $target = event.target;
-    if (board[$target.dataset.row][$target.dataset.col].name === 'whiteSpace') {
+    $target = $(event.target);
+    if (board[$target.attr('data-row')][$target.attr('data-col')].name === 'whiteSpace') {
         return false;
     }
-    if (board[$target.dataset.row][$target.dataset.col].name === currentPlayer) {
-        if (board[$target.dataset.row][$target.dataset.col].isSelected === false) {
-            board[$target.dataset.row][$target.dataset.col].isSelected = true;
+    if (board[$target.attr('data-row')][$target.attr('data-col')].name === currentPlayer) {
+        if (board[$target.attr('data-row')][$target.attr('data-col')].isSelected === false) {
+            board[$target.attr('data-row')][$target.attr('data-col')].isSelected = true;
             if (desiredMovePoints.length <= 2) {
                 desiredMovePoints.push($target);
             }
@@ -95,8 +95,8 @@ var selectMove = function(event) {
         if (desiredMovePoints.length === 2) {
             moveThaCheckaPieces();
         }
-    } else if (board[$target.dataset.row][$target.dataset.col].name === 'emptySpace' && desiredMovePoints.length === 1) {
-        board[$target.dataset.row][$target.dataset.col].isSelected = true;
+    } else if (board[$target.attr('data-row')][$target.attr('data-col')].name === 'emptySpace' && desiredMovePoints.length === 1) {
+        board[$target.attr('data-row')][$target.attr('data-col')].isSelected = true;
         desiredMovePoints.push($target);
         moveThaCheckaPieces();
     }
@@ -182,7 +182,6 @@ var renderGame = function() {
                     }
                     if (board[i][j].isCrowned === true) {
                         $($allDivs[k]).css('backgroundImage', "url('images/crown.png')");
-                        // $allDivs[k].style.backgroundImage = "url('images/crown.png')";
                     }
                 }
             }
@@ -192,12 +191,12 @@ var renderGame = function() {
 
 var moveThaCheckaPieces = function() {
     // coordinates of origin
-    originRow = parseInt(desiredMovePoints[0].dataset.row);
-    originCol = parseInt(desiredMovePoints[0].dataset.col);
+    originRow = parseInt(desiredMovePoints[0].attr('data-row'));
+    originCol = parseInt(desiredMovePoints[0].attr('data-col'));
 
     // get the coordinates for destination
-    destRow = parseInt(desiredMovePoints[1].dataset.row);
-    destCol = parseInt(desiredMovePoints[1].dataset.col);
+    destRow = parseInt(desiredMovePoints[1].attr('data-row'));
+    destCol = parseInt(desiredMovePoints[1].attr('data-col'));
 
     // create object for reference by destination
     originObject = board[originRow][originCol];
@@ -306,8 +305,7 @@ var moveThaCheckaPieces = function() {
 // function for checking for opponent
 var checkForOpponent = function() {
     console.log('checking for opponent to jump');
-
-    $opponent = document.querySelector('[data-row="' + middlePieceRow + '"][data-col="' + middlePieceCol + '"]');
+    $opponent = $('[data-row="' + middlePieceRow + '"][data-col="' + middlePieceCol + '"]');
 
     if (board[middlePieceRow][middlePieceCol].name === 'emptySpace' || board[middlePieceRow][middlePieceCol].name === currentPlayer || board[middlePieceRow][middlePieceCol].name === 'whiteSpace') {
         console.log('no good');
@@ -318,8 +316,8 @@ var checkForOpponent = function() {
         // remove the properties we don't want to move over
         board[originRow][originCol].isSelected = false;
         // Display Cleanup
-        desiredMovePoints[0].style.border = '';
-        desiredMovePoints[0].style.background = '';
+        desiredMovePoints[0].css('border', '')
+        desiredMovePoints[0].css('background', '')
 
         // Set object info to the origin properties
         for (var k in originObject) {
@@ -337,9 +335,9 @@ var checkForOpponent = function() {
             board[middlePieceRow][middlePieceCol][m] = emptyCheckerSpace[m];
         }
 
-        $opponent.style.background = '';
+        $opponent.css('background', '')
         // Display CleanUp
-        desiredMovePoints[1].style.border = '';
+        desiredMovePoints[1].css('border', '')
         desiredMovePoints = [];
         determineWinner();
         switchPlayer();
@@ -352,8 +350,8 @@ var movePieceCleanUp = function() {
     // remove the properties we don't want to move over
     board[originRow][originCol].isSelected = false;
     // Display Cleanup
-    desiredMovePoints[0].style.border = '';
-    desiredMovePoints[0].style.background = '';
+    desiredMovePoints[0].css('border', '')
+    desiredMovePoints[0].css('background', '')
 
     // Set object info to the origin properties
     // TODO can we just reassign the object's index in the array?
@@ -368,7 +366,7 @@ var movePieceCleanUp = function() {
     }
 
     // Display CleanUp
-    desiredMovePoints[1].style.border = '';
+    desiredMovePoints[1].css('border', '');
     desiredMovePoints = [];
 };
 
@@ -380,14 +378,14 @@ var switchPlayer = function() {
     } else if (currentPlayer === players[1].name) {
         currentPlayer = players[0].name;
     }
-    document.getElementById('playerUp').textContent = currentPlayer;
+    $('#playerUp').text(currentPlayer)
 };
 
 // function for resetting play
 var resetPlay = function() {
     console.log('resetting play');
-    desiredMovePoints[0].style.border = '';
-    desiredMovePoints[1].style.border = '';
+    desiredMovePoints[0].css('border', '');
+    desiredMovePoints[1].css('border', '');
     board[originRow][originCol].isSelected = false;
     board[destRow][destCol].isSelected = false;
     desiredMovePoints = [];
