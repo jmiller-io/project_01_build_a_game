@@ -56,7 +56,7 @@ var createGameBoard = function() {
     }
 
     // Get Table Rows
-    $allTableRows = $('tr');
+    $allTableRows = jQuery('tr');
 
     // Create Table Cells
     for (var n = 0; n < $allTableRows.length; n++) {
@@ -112,33 +112,41 @@ var colorTiles = function() {
         for (var j = 0; j < $allTableRows[i].children.length; j++) {
             if (i % 2 === 0) {
                 if (j % 2 === 0) {
-                    $allTableRows[i].children[j].classList.add('white');
-                    var $div = document.createElement('div');
-                    $div.dataset.row = i;
-                    $div.dataset.col = j;
-                    $allTableRows[i].children[j].appendChild($div);
+                    $($allTableRows[i].children[j]).addClass('white')
+                    var $div = $('<div>')
+                    $div.attr({
+                      'data-row': i,
+                      'data-col': j
+                    });
+                    $($allTableRows[i].children[j]).append($div)
                 } else {
-                    $allTableRows[i].children[j].classList.add('black');
-                    var $div = document.createElement('div');
-                    $div.dataset.row = i;
-                    $div.dataset.col = j;
-                    $allTableRows[i].children[j].appendChild($div);
+                    $($allTableRows[i].children[j]).addClass('black')
+                    var $div = $('<div>')
+                    $div.attr({
+                      'data-row': i,
+                      'data-col': j
+                    });
+                    $($allTableRows[i].children[j]).append($div)
                 }
             }
 
             if (i % 2 === 1) {
                 if (j % 2 === 0) {
-                    $allTableRows[i].children[j].classList.add('black');
-                    var $div = document.createElement('div');
-                    $div.dataset.row = i;
-                    $div.dataset.col = j;
-                    $allTableRows[i].children[j].appendChild($div);
+                    $($allTableRows[i].children[j]).addClass('black')
+                    var $div = $('<div>')
+                    $div.attr({
+                      'data-row': i,
+                      'data-col': j
+                    });
+                    $($allTableRows[i].children[j]).append($div)
                 } else {
-                    $allTableRows[i].children[j].classList.add('white');
-                    var $div = document.createElement('div');
-                    $div.dataset.row = i;
-                    $div.dataset.col = j;
-                    $allTableRows[i].children[j].appendChild($div);
+                    $($allTableRows[i].children[j]).addClass('white')
+                    var $div = $('<div>')
+                    $div.attr({
+                      'data-row': i,
+                      'data-col': j
+                    });
+                    $($allTableRows[i].children[j]).append($div)
                 }
             }
         }
