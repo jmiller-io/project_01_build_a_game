@@ -156,32 +156,33 @@ var colorTiles = function() {
 // Render Game
 var renderGame = function() {
     //Get all divs to set element Id
-    $allDivs = document.querySelectorAll('div');
+    $allDivs = $('div');
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
             var row = i;
             var col = j;
             for (var k = 0; k < $allDivs.length; k++) {
-                if ($allDivs[k].dataset.row == i && $allDivs[k].dataset.col == j) {
+                if ($($allDivs[k]).attr('data-row') == i && $($allDivs[k]).attr('data-col') == j) {
                     if (board[i][j].name === 'green') {
-                        $allDivs[k].classList.add('checker');
-                        $allDivs[k].style.background = "green";
+                        $($allDivs[k]).addClass('checker');
+                        $($allDivs[k]).css('background-color', 'green');
                     }
                     if (board[i][j].name === 'red') {
-                        $allDivs[k].classList.add('checker');
-                        $allDivs[k].style.background = "red";
+                        $($allDivs[k]).addClass('checker');
+                        $($allDivs[k]).css('background-color', 'red');
                     }
                     if (board[i][j].name === 'emptySpace') {
-                        $allDivs[k].classList.add('checker');
+                        $($allDivs[k]).addClass('checker');
                     }
                     if (board[i][j].isSelected === true) {
-                        $allDivs[k].style.border = "2px solid yellow";
+                        $($allDivs[k]).css('border', '2px solid yellow');
                     }
                     if (board[i][j].name === 'whiteSpace') {
-                        $allDivs[k].classList.add('checker');
+                        $($allDivs[k]).addClass('checker');
                     }
                     if (board[i][j].isCrowned === true) {
-                        $allDivs[k].style.backgroundImage = "url('images/crown.png')";
+                        $($allDivs[k]).css('backgroundImage', "url('images/crown.png')");
+                        // $allDivs[k].style.backgroundImage = "url('images/crown.png')";
                     }
                 }
             }
