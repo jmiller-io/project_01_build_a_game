@@ -1,3 +1,4 @@
+# Crowns
 Synopsis
 
 This project is the first project built in my third week of attending the Web Development Immersive course at Generaly Assembly. This project demonstrates and displays my understanding of the concepts covered in class pertaining to Javascript, DOM Manipulation, CSS and HTML.
